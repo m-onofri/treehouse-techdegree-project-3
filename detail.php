@@ -1,20 +1,28 @@
-<?php 
+<?php
+include('inc/functions.php');
+if (isset($_GET['id'])) {
+    $entry_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+    $entry = get_entry($entry_id);
+}
+
 include('inc/header.php');
 ?>
         <section>
             <div class="container">
                 <div class="entry-list single">
                     <article>
-                        <h1>The best day I’ve ever had</h1>
-                        <time datetime="2016-01-31">January 31, 2016</time>
+                        <h1><?php echo $entry['title']; ?></h1>
+                        <time datetime="<?php echo $entry['date']; ?>">
+                            <?php echo strftime("%B %e, %G", strtotime($entry['date'])); ?>
+                        </time>
                         <div class="entry">
                             <h3>Time Spent: </h3>
-                            <p>15 Hours</p>
+                            <p><?php echo $entry['time_spent']; ?></p>
                         </div>
                         <div class="entry">
                             <h3>What I Learned:</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut rhoncus felis, vel tincidunt neque.</p>
-                            <p>Cras egestas ac ipsum in posuere. Fusce suscipit, libero id malesuada placerat, orci velit semper metus, quis pulvinar sem nunc vel augue. In ornare tempor metus, sit amet congue justo porta et. Etiam pretium, sapien non fermentum consequat, <a href="">dolor augue</a> gravida lacus, non accumsan. Vestibulum ut metus eleifend, malesuada nisl at, scelerisque sapien.</p>
+                            <p><?php echo $entry['learned']; ?></p>
                         </div>
                         <div class="entry">
                             <h3>Resources to Remember:</h3>
