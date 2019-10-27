@@ -4,7 +4,7 @@ function get_entries() {
     include('connection.php');
 
     try {
-       $results = $db->query('SELECT * FROM entries');
+       $results = $db->query('SELECT * FROM entries ORDER BY date DESC');
     } catch (Exception $e) {
        $e->getMessage();
     }
