@@ -1,5 +1,8 @@
 <?php
 include('inc/functions.php');
+$page_title = "New";
+$page_path = "new.php";
+$title = $date = $timeSpent = $learned = $resources = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = trim(filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING));
@@ -33,25 +36,7 @@ include('inc/header.php');
         <section>
             <div class="container">
                 <div class="new-entry">
-                    <?php 
-                    if (isset($error_message)) {
-                        echo "<h2>$error_message</h2>";
-                    } ?>
-                    <h2>New Entry</h2>
-                    <form method="post" action="new.php">
-                        <label for="title"> Title</label>
-                        <input id="title" type="text" name="title" placeholder="New Entry Title"><br>
-                        <label for="date">Date</label>
-                        <input id="date" type="date" name="date"><br>
-                        <label for="time-spent"> Time Spent</label>
-                        <input id="time-spent" type="text" name="timeSpent" placeholder="5 hours"><br>
-                        <label for="what-i-learned">What I Learned</label>
-                        <textarea id="what-i-learned" rows="5" name="whatILearned" placeholder="Describe here what you learned..."></textarea>
-                        <label for="resources-to-remember">Resources to Remember</label>
-                        <textarea id="resources-to-remember" rows="5" name="resourcesToRemember" placeholder="List here the resources you want to remember..."></textarea>
-                        <input type="submit" value="Publish Entry" class="button">
-                        <a href="#" class="button button-secondary">Cancel</a>
-                    </form>
+                <?php include('inc/form.php'); ?>
                 </div>
             </div>
         </section>

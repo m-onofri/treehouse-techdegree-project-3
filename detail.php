@@ -43,7 +43,9 @@ include('inc/header.php');
                 </div>
             </div>
             <div class="edit">
-                <p><a href="edit.html">Edit Entry</a></p>
+                <p>
+                    <a href="edit.php?id=<?php echo $entry['id']; ?>">Edit Entry</a>
+                </p>
             </div>
         </section>
 <?php 
