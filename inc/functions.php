@@ -52,10 +52,26 @@ function add_entry($title, $date, $time_spent, $learned, $resources, $id = null)
         }
         if ($result->execute()) {
             return true;
-       }
+        }
        return false;
     } catch (Exception $e) {
        $e->getMessage();
     }
+}
+
+function delete_entry($entry_id) {
+    include('connection.php');
+
+    try {
+       $result = $db->prepare('DELETE FROM entries WHERE id = ?');
+       $result->bindValue(1, $entry_id, PDO::PARAM_INT);
+       if ($result->execute()) {
+            return true;
+        }
+    } catch (Exception $e) {
+       $e->getMessage();
+    }
+
+    return false;
 }
 
