@@ -4,6 +4,12 @@ if (isset($_GET['id'])) {
     $entry_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
     $entry = get_entry($entry_id);
+
+    // echo '<pre>';
+    // echo print_r($entry);
+    // echo var_dump($entry['time_spent']);
+    // echo '</pre>';
+    // die;
 }
 
 include('inc/header.php');
