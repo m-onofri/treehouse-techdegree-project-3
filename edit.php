@@ -18,16 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $resources = filter_input(INPUT_POST, 'resourcesToRemember', FILTER_SANITIZE_STRING);
     $entry_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-    // echo '<pre>';
-    // echo var_dump($title);
-    // echo var_dump($date);
-    // echo var_dump($timeSpent);
-    // echo var_dump($learned);
-    // echo var_dump($resources);
-    // echo var_dump($entry_id);
-    // echo '</pre>';
-    // die;
-
+    
     if (empty($title) || empty($date) || empty($timeSpent) || empty($learned)) {
         $error_message = "Please fill in the required fields: Title, Date, 'Time Spent' and 'What I learned'";
     } else {
@@ -41,13 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 include('inc/header.php');
 ?>
-<section>
-    <div class="container">
+
         <div class="edit-entry">
             <?php include('inc/form.php'); ?>
         </div>
-    </div>
-</section>
 <?php 
 include('inc/footer.php');
 ?>

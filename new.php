@@ -1,5 +1,6 @@
 <?php
 include('inc/functions.php');
+
 $page_title = "New";
 $page_path = "new.php";
 $title = $date = $timeSpent = $learned = $resources = '';
@@ -10,15 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $timeSpent = trim(filter_input(INPUT_POST, 'timeSpent', FILTER_SANITIZE_STRING));
     $learned = filter_input(INPUT_POST, 'whatILearned', FILTER_SANITIZE_STRING);
     $resources = filter_input(INPUT_POST, 'resourcesToRemember', FILTER_SANITIZE_STRING);
-
-    // echo '<pre>';
-    // echo var_dump($title);
-    // echo var_dump($date);
-    // echo var_dump($timeSpent);
-    // echo var_dump($learned);
-    // echo var_dump($resources);
-    // echo '</pre>';
-    // die;
 
     if (empty($title) || empty($date) || empty($timeSpent) || empty($learned)) {
         $error_message = "Please fill in the required fields: Title, Date, 'Time Spent' and 'What I learned'";
@@ -33,13 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 include('inc/header.php');
 ?>
-        <section>
-            <div class="container">
+
+       
                 <div class="new-entry">
-                <?php include('inc/form.php'); ?>
+
+                    <?php include('inc/form.php'); ?>
+
                 </div>
-            </div>
-        </section>
+
 <?php 
 include('inc/footer.php');
 ?>

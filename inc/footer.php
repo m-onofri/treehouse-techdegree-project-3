@@ -1,6 +1,8 @@
+            </div>
+        </section>
         <footer>
             <div>
-                &copy; MyJournal
+                 Manuele Onofri <?php echo date('Y'); ?> - MyLearningJournal
             </div>
         </footer>
     </body>

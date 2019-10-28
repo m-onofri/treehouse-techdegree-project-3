@@ -5,12 +5,6 @@ if (isset($_GET['id'])) {
     $entry_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
     $entry = get_entry($entry_id);
-
-    // echo '<pre>';
-    // echo print_r($entry);
-    // echo var_dump($entry['time_spent']);
-    // echo '</pre>';
-    // die;
 }
 
 if (isset($_POST['delete'])) {
@@ -25,8 +19,7 @@ if (isset($_POST['delete'])) {
 
 include('inc/header.php');
 ?>
-        <section>
-            <div class="container">
+        
                 <div class="entry-list single">
                     <article>
                         <h1><?php echo $entry['title']; ?></h1>
@@ -52,17 +45,17 @@ include('inc/header.php');
                         </div>
                     </article>
                 </div>
-            </div>
-            <div class="edit">
-                <p>
-                    <a href="edit.php?id=<?php echo $entry['id']; ?>">Edit Entry</a>
-                </p>
-                <form method='post' action='detail.php' onsubmit="return confirm('Are you sure you want to delete this task?')">
-                    <input type='hidden' value='<?php echo $entry['id']; ?>' name='delete' />
-                    <input type='submit' class='button-delete' value='Delete' />  
-                </form>
-            </div>
-        </section>
+            
+                <div class="edit">
+                    <p>
+                        <a href="edit.php?id=<?php echo $entry['id']; ?>">Edit Entry</a>
+                    </p>
+                    <form method='post' action='detail.php' onsubmit="return confirm('Are you sure you want to delete this task?')">
+                        <input type='hidden' value='<?php echo $entry['id']; ?>' name='delete' />
+                        <input type='submit' class='button-delete' value='Delete' />  
+                    </form>
+                </div>
+            
 <?php 
 include('inc/footer.php');
 ?>
