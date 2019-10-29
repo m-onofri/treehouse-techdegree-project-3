@@ -19,6 +19,8 @@ include('inc/header.php');
                     <time datetime="<?php echo $entry['date']; ?>">
                         <?php echo strftime("%B %e, %G", strtotime($entry['date'])); ?>
                     </time>
+
+                    <!-- TODO: enter here list of tags -->
                 </article>
             <?php } ?>
 

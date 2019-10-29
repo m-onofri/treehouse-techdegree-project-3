@@ -84,6 +84,11 @@ footer {
 .button:focus {
 	outline: 0;
 }
+.button-delete {
+	text-transform: uppercase;
+	background-color: tomato;
+	border-color: tomato;
+}
 
 
 
@@ -186,13 +191,15 @@ ul li a {
 }
 .edit {
 	padding-bottom: 80px;
-	text-align: center;
 	margin: 0 auto;
+	width: 200px;
+	display: flex;
+	justify-content: space-evenly;
 }
 .edit a {
 	font-weight: 400;
 	text-transform: uppercase;
-	font-size: 18px;
+	font-size: 14px;
 }
 
 

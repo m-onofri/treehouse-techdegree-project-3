@@ -51,6 +51,8 @@ function add_entry($title, $date, $time_spent, $learned, $resources, $id = null)
             $result->bindValue(6, $id, PDO::PARAM_INT);
         }
         if ($result->execute()) {
+            //TODO retrieve the last entry_id if $_id = null
+            //TODO execute add_tags($id)
             return true;
         }
        return false;

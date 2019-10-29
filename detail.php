@@ -34,25 +34,41 @@ include('inc/header.php');
                             <h3>What I Learned:</h3>
                             <p><?php echo $entry['learned']; ?></p>
                         </div>
-                        <div class="entry">
-                            <h3>Resources to Remember:</h3>
-                            <ul>
-                                <li><a href="">Lorem ipsum dolor sit amet</a></li>
-                                <li><a href="">Cras accumsan cursus ante, non dapibus tempor</a></li>
-                                <li>Nunc ut rhoncus felis, vel tincidunt neque</li>
-                                <li><a href="">Ipsum dolor sit amet</a></li>
-                            </ul>
-                        </div>
+
+                        <?php if (!empty($entry['resources'])) {
+                            $resources = explode(", ", $entry['resources']);
+                            echo '<div class="entry">';
+                            echo "<h3>Resources to Remember:</h3>";
+                            echo "<ul>";
+                            foreach ($resources as $resource) {
+                                echo "<li>$resource</li>";
+                            }
+                            echo "</ul>";
+                            echo "</div";
+                        } ?>
+
+                        <?php if (!empty($entry['tags'])) {
+                            $tags = explode(", ", $entry['tags']);
+                            echo '<div class="entry">';
+                            echo "<h3>tags:</h3>";
+                            echo "<ul>";
+                            foreach ($tags as $tag) {
+                                echo "<li>$tag</li>";
+                            }
+                            echo "</ul>";
+                            echo "</div";
+                        } ?>
+
                     </article>
                 </div>
             
                 <div class="edit">
-                    <p>
-                        <a href="edit.php?id=<?php echo $entry['id']; ?>">Edit Entry</a>
-                    </p>
+                
+                    <a class="button" href="edit.php?id=<?php echo $entry['id']; ?>">Edit Entry</a>
+                    
                     <form method='post' action='detail.php' onsubmit="return confirm('Are you sure you want to delete this task?')">
                         <input type='hidden' value='<?php echo $entry['id']; ?>' name='delete' />
-                        <input type='submit' class='button-delete' value='Delete' />  
+                        <input type='submit' class='button button-delete' value='delete' />  
                     </form>
                 </div>
             
