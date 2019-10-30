@@ -86,10 +86,12 @@ footer {
 }
 .button-delete {
 	text-transform: uppercase;
-	background-color: tomato;
-	border-color: tomato;
+	background-color: rgb(255, 0, 0);
+	border-color: rgb(255, 0, 0);
 }
-
+.button-tag {
+	margin-right: 1rem;
+}
 
 
 /* ==========================================================================
@@ -200,6 +202,10 @@ ul li a {
 	font-weight: 400;
 	text-transform: uppercase;
 	font-size: 14px;
+}
+
+.tags-list {
+	margin-top: 1.5rem;
 }
 
 

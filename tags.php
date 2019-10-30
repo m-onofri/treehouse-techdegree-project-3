@@ -1,7 +1,11 @@
 <?php 
 include('inc/functions.php');
 
-$entries = get_entries();
+if (isset($_GET['id'])) {
+    $tag_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+    $entries = get_entries_per_tag($tag_id);
+}
 
 include('inc/header.php');
 ?>

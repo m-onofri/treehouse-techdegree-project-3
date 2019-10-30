@@ -14,6 +14,24 @@ function get_entries() {
     return $entries;
 }
 
+function get_entries_per_tag($tag_id) {
+    include('connection.php');
+
+    try {
+        $results = $db->query('SELECT entries.* FROM entries JOIN entries_tags
+                                ON entries.id = entries_tags.entries_id
+                                WHERE entries_tags.tags_id = ?');
+        $results->bindValue(1, $tag_id, PDO::PARAM_INT);
+        $results->execute();
+    } catch (Exception $e) {
+       $e->getMessage();
+    }
+
+    $tags = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $tags;
+}
+
 function get_entry($entry_id) {
     include('connection.php');
 
@@ -30,24 +48,34 @@ function get_entry($entry_id) {
     return $entry;
 }
 
-function get_tags($entry_id = null) {
+function get_tags_per_entry($entry_id) {
     include('connection.php');
 
     try {
-        if (!empty($entry_id)) {
-            $results = $db->query('SELECT tags.name FROM tags JOIN entries_tags
-                                   ON tags.id = entries_tags.tags_id
-                                   WHERE entries_tags.entries_id = ?');
-            $results->bindValue(1, $entry_id, PDO::PARAM_INT);
-            $results->execute();
-        } else {
-            $results = $db->query('SELECT * FROM tags ORDER BY name');
-        }
+        $results = $db->query('SELECT tags.name, tags.id FROM tags JOIN entries_tags
+                                ON tags.id = entries_tags.tags_id
+                                WHERE entries_tags.entries_id = ?');
+        $results->bindValue(1, $entry_id, PDO::PARAM_INT);
+        $results->execute();
     } catch (Exception $e) {
        $e->getMessage();
     }
 
     $tags = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $tags;
+}
+
+function get_tags() {
+    include('connection.php');
+
+    try {
+        $results = $db->query('SELECT name FROM tags ORDER BY name');
+    } catch (Exception $e) {
+       $e->getMessage();
+    }
+
+    $tags = $results->fetch();
 
     return $tags;
 }
@@ -121,7 +149,8 @@ function add_tags($tags, $entry_id) {
 
     $tags_arr = explode(', ', $tags);
     $tags_list = get_tags();
-    $entry_tags = get_tags($entry_id);
+
+    $entry_tags = array_map(function($t) { return $t['name'];}, get_tags_per_entry($entry_id));
 
     foreach ($tags_arr as $tag) {
         if (!in_array($tag, $tags_list)) {
@@ -139,7 +168,6 @@ function add_tags($tags, $entry_id) {
             } catch (Exception $e) {
                 $e->getMessage();
             }
-            
         }
     }
 
@@ -151,7 +179,6 @@ function add_tags($tags, $entry_id) {
             delete_entry_tag($entry_id, $tag_id);
         }
     }
-
 }
 
 function delete_entry_tag($entry_id, $tag_id) {

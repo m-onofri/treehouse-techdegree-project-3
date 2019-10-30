@@ -5,7 +5,7 @@ if (isset($_GET['id'])) {
     $entry_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
     $entry = get_entry($entry_id);
-    $tags = get_tags($entry_id);
+    $tags = get_tags_per_entry($entry_id);
 }
 
 if (isset($_POST['delete'])) {
@@ -27,6 +27,16 @@ include('inc/header.php');
                         <time datetime="<?php echo $entry['date']; ?>">
                             <?php echo strftime("%B %e, %G", strtotime($entry['date'])); ?>
                         </time>
+                        <?php if (!empty($tags)) {
+                            echo '<div class="entry">';
+                            echo "<h3>tags:</h3>";
+                            echo "<div class='tags-list'>";
+                            foreach ($tags as $tag) {
+                                echo "<a href='' class='button button-tag'>" . $tag['name'] . "</a>";
+                            }
+                            echo "</div>";
+                            echo "</div>";
+                        } ?>
                         <div class="entry">
                             <h3>Time Spent: </h3>
                             <p><?php echo $entry['time_spent']; ?></p>
@@ -43,17 +53,6 @@ include('inc/header.php');
                             echo "<ul>";
                             foreach ($resources as $resource) {
                                 echo "<li>$resource</li>";
-                            }
-                            echo "</ul>";
-                            echo "</div";
-                        } ?>
-
-                        <?php if (!empty($tags)) {
-                            echo '<div class="entry">';
-                            echo "<h3>tags:</h3>";
-                            echo "<ul>";
-                            foreach ($tags as $tag) {
-                                echo "<li>" . $tag['name'] . "</li>";
                             }
                             echo "</ul>";
                             echo "</div";

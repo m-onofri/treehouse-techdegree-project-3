@@ -6,7 +6,9 @@ $page_path = "edit.php";
 if (isset($_GET['id'])) {
     $entry_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
     $entry = get_entry($entry_id);
-    $tags = implode(", ", get_tags($entry_id));
+
+    $tags = implode(", ", array_map(function($t) { return $t['name'];}, 
+                                    get_tags_per_entry($entry_id)));
 
     list(, $title, $date, $timeSpent, $learned, $resources) = $entry;
 }
