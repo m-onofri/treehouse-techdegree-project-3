@@ -2,6 +2,7 @@
 include('inc/functions.php');
 
 $entries = get_entries();
+$tags = get_tags();
 
 include('inc/header.php');
 ?>

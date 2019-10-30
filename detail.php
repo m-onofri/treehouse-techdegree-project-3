@@ -5,6 +5,7 @@ if (isset($_GET['id'])) {
     $entry_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
     $entry = get_entry($entry_id);
+    $tags = get_tags($entry_id);
 }
 
 if (isset($_POST['delete'])) {
@@ -47,13 +48,12 @@ include('inc/header.php');
                             echo "</div";
                         } ?>
 
-                        <?php if (!empty($entry['tags'])) {
-                            $tags = explode(", ", $entry['tags']);
+                        <?php if (!empty($tags)) {
                             echo '<div class="entry">';
                             echo "<h3>tags:</h3>";
                             echo "<ul>";
                             foreach ($tags as $tag) {
-                                echo "<li>$tag</li>";
+                                echo "<li>" . $tag['name'] . "</li>";
                             }
                             echo "</ul>";
                             echo "</div";
