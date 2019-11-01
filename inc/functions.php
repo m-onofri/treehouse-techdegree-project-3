@@ -25,7 +25,8 @@ function get_entries_per_tag($tag_id) {
     try {
         $results = $db->query('SELECT entries.* FROM entries JOIN entries_tags
                                 ON entries.id = entries_tags.entries_id
-                                WHERE entries_tags.tags_id = ?');
+                                WHERE entries_tags.tags_id = ?
+                                ORDER BY entries.date DESC');
         $results->bindValue(1, $tag_id, PDO::PARAM_INT);
         $results->execute();
     } catch (Exception $e) {
@@ -172,7 +173,7 @@ function add_entry($title, $date, $time_spent, $learned, $resources, $tags, $id 
 
 /* Create or update a tag
 ** Parameter: tag name, id (optional)
-** Returns the tag id if the tag was created or updated, otherweise returns FALSE */
+** Returns the tag id if the tag was created and TRUE if the tag was updated, otherweise returns FALSE */
 function add_single_tag($tag, $id = null) {
     include('connection.php');
 
@@ -187,8 +188,12 @@ function add_single_tag($tag, $id = null) {
             $result->bindValue(2, $id, PDO::PARAM_INT);
         }
         if ($result->execute()) {
-            $tag_id = $db->lastInsertId();
-            return $tag_id;
+            if (!empty($id)) {
+                return true;
+            } else {
+                $tag_id = $db->lastInsertId();
+                return $tag_id;
+            }
         }  
     } catch (Exception $e) {
         $e->getMessage();
@@ -198,11 +203,11 @@ function add_single_tag($tag, $id = null) {
 
 /* Add a list of tags for a specific entry in the database
 ** Parameter: tag list as an array, entry id
-** Returns the TRUE if the tags was correctly added to the database, otherweise returns FALSE */
+** Returns TRUE if the tags was correctly added to the database, otherweise returns FALSE */
 function add_tags($tags, $entry_id) {
     include('connection.php');
 
-    $tags_arr = explode(', ', $tags);
+    $tags_arr = array_map(function($t) {return trim($t);}, explode(',', $tags));
     //Get all the tags in the tags table
     $tags_list = get_tags();
     //Get all the tags associated with the entry
@@ -247,7 +252,7 @@ function add_tags($tags, $entry_id) {
 
 /* Remove a tag from the tags' list of a specific entry
 ** Parameter: entry id, tag id
-** Returns the TRUE if the tag was correctly removed from the tags' list of the entry, otherweise returns FALSE */
+** Returns TRUE if the tag was correctly removed from the tags' list of the entry, otherweise returns FALSE */
 function delete_entry_tag($entry_id, $tag_id) {
     include('connection.php');
     try {
@@ -267,7 +272,7 @@ function delete_entry_tag($entry_id, $tag_id) {
 
 /* Delete a specific entry
 ** Parameter: entry id
-** Returns the TRUE if the entry was correctly removed from the entries table and entries_tags table, otherweise returns FALSE */
+** Returns TRUE if the entry was correctly removed from the entries table and entries_tags table, otherweise returns FALSE */
 function delete_entry($entry_id) {
     include('connection.php');
 
@@ -290,7 +295,7 @@ function delete_entry($entry_id) {
 
 /* Delete a specific tag
 ** Parameter: tag id
-** Returns the TRUE if the tag was correctly removed from the tags table and entries_tags table, otherweise returns FALSE */
+** Returns TRUE if the tag was correctly removed from the tags table and entries_tags table, otherweise returns FALSE */
 function delete_tag($tag_id) {
     include('connection.php');
 

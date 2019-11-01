@@ -32,12 +32,12 @@ if (isset($error_message)) {
     <textarea id="what-i-learned" rows="5" name="whatILearned" placeholder="Describe here what you learned..."><?php echo $learned; ?></textarea>
 
     <!-- Resources to Remember -->
-    <label for="resources-to-remember">Resources to Remember</label>
-    <textarea id="resources-to-remember" rows="5" name="resourcesToRemember" placeholder="List here the resources you want to remember..."><?php echo $resources; ?></textarea>
+    <label for="resources-to-remember">Resources to Remember (separate with commas)</label>
+    <textarea id="resources-to-remember" rows="5" name="resourcesToRemember" placeholder="resource1, resource2, resource3, ..."><?php echo $resources; ?></textarea>
 
     <!-- Tags -->
-    <label for="tags">Tags</label>
-    <textarea id="tags" rows="5" name="tags" placeholder="List the tags for this entry..."><?php echo $tags; ?></textarea>
+    <label for="tags">Tags (separate with commas)</label>
+    <textarea id="tags" rows="5" name="tags" placeholder="tag1, tag2, tag3, ..."><?php echo $tags; ?></textarea>
 
     <?php if ($page_title == "Edit") { ?>
         <!-- Display button for the form in the Edit Page -->

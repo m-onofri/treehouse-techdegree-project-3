@@ -78,6 +78,9 @@ footer {
 	text-align: center;
 	font-size: 14px;
 }
+.button:hover {
+	padding: 10px 12px 8px;
+}
 .button.button-secondary {
 	background: #FFF;
 	border: 2px solid #e1e1e1;
@@ -125,7 +128,8 @@ footer {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
 	margin: 0;
 	font-weight: 400;
 	line-height: 1em;
@@ -153,6 +157,15 @@ h3 {
 	font-family: 'Work Sans', serif;
 	font-weight: 600;
 	text-transform: uppercase;
+}
+h4 {
+	font-size: 18px;
+	font-family: 'Work Sans', serif;
+	font-weight: 600;
+	text-transform: uppercase;
+	text-align: center;
+	color: #678f89;
+	margin-top: 2rem;
 }
 p {
 	line-height: 1.8em;

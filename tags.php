@@ -27,7 +27,7 @@ if (isset($_POST['delete']) && isset($_POST['tag'])) {
     $tag_id = get_tag_id($tag_name)['id'];
     //Check if the tag was deleted
     if (delete_tag($tag_id)) {
-        header('location: tags.php');
+        header('location: tags.php?msg=Tag+Deleted');
         die;
     } else {
         header('location: tags.php?msg=Unable+To+Delete+Entry');
@@ -54,7 +54,7 @@ if (isset($_POST['change-tag-name']) && isset($_POST['new-name'])) {
     }
     //Check if the tag is updated
     if (add_single_tag($tag_new_name, $tag_id)) {
-        header('location: tags.php');
+        header('location: tags.php?msg=Tag+Updated');
         die;
     } else {
         header('location: tags.php?msg=Unable+To+Update+Tag+Name');
@@ -86,6 +86,20 @@ include('inc/header.php');
     </form>
 </div>
 
+<!-- Display the message -->
+<?php 
+if (isset($_GET['msg'])) {
+    $msg = filter_input(INPUT_GET, 'msg', FILTER_SANITIZE_STRING);
+    echo "<div class='tags-message'>";
+    echo "<h4>$msg</h4>";
+    echo "</div";
+}
+?>
+
+<div class="tags-message">
+
+</div>
+
 <!-- Display this form when update button was selected -->
 <?php if (isset($_POST['update'])) { ?>
     <div class="edit-tag">
@@ -101,8 +115,18 @@ include('inc/header.php');
 
 <!-- Display list of entries with the selected tag  -->
 <?php 
-if (isset($entries)) { 
-    include('inc/entriesList.php');
+if (isset($entries)) {
+    $entries_number = count($entries);
+    if ($entries_number > 0) {
+        if ($entries_number == 1) {
+            echo "<h4>$entries_number entry with the tag: $tag_name</h4>";
+        } else {
+            echo "<h4>$entries_number entries with the tag: $tag_name</h4>";
+        }
+        include('inc/entriesList.php');
+    } else {
+        echo "<h4>No entries with the tag: $tag_name</h4>";
+    }
 }
 ?>
     

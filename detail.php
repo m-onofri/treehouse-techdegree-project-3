@@ -40,7 +40,7 @@ include('inc/header.php');
             echo "<h3>tags:</h3>";
             echo "<div class='tags-list'>";
             foreach ($tags as $tag) {
-                echo "<a href='' class='button button-tag'>" . $tag['name'] . "</a>";
+                echo "<a href='tags.php?id=" . $tag['id'] . "' class='button button-tag'>" . $tag['name'] . "</a>";
             }
             echo "</div>";
             echo "</div>";
@@ -76,7 +76,7 @@ include('inc/header.php');
 <div class="edit">
     <a class="button" href="edit.php?id=<?php echo $entry['id']; ?>">Edit Entry</a>
     <form method='post' action='detail.php' 
-          onsubmit="return confirm('Are you sure you want to delete this task?')">
+          onsubmit="return confirm('Are you sure you want to delete this entry?')">
         <input type='hidden' value='<?php echo $entry['id']; ?>' name='delete' />
         <input type='submit' class='button button-delete' value='delete' />  
     </form>
