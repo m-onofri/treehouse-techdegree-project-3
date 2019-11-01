@@ -1,23 +1,31 @@
 <?php 
 include('inc/functions.php');
 
+//Get all the tags
 $tags = get_tags();
 
+//Get all the data to display all the entry with the tag selected from the index page or the detail page
 if (isset($_GET['id'])) {
+    //Get and filter the id of the selected tag, then get the tag name and the list of entries with the selected tag
     $tag_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
     $tag_name = get_tag($tag_id)['name'];
     $entries = get_entries_per_tag($tag_id);
 }
 
+//Get all the data to display all the entry with the tag selected from the form in the tags page
 if (isset($_POST['submit']) && isset($_POST['tag'])) {
+    //Get and filter the name of the selected tag, then get the tag id and the list of entries with the selected tag
     $tag_name = filter_input(INPUT_POST, 'tag', FILTER_SANITIZE_STRING);
     $tag_id = get_tag_id($tag_name)['id'];
     $entries = get_entries_per_tag($tag_id);
 }
 
+//Check if the delete button in the form was clicked
 if (isset($_POST['delete']) && isset($_POST['tag'])) {
+    //Get and filter the name of the tag you want delete, then get the tag id
     $tag_name = filter_input(INPUT_POST, 'tag', FILTER_SANITIZE_STRING);
     $tag_id = get_tag_id($tag_name)['id'];
+    //Check if the tag was deleted
     if (delete_tag($tag_id)) {
         header('location: tags.php');
         die;
@@ -27,17 +35,24 @@ if (isset($_POST['delete']) && isset($_POST['tag'])) {
     }
 }
 
+//Check if the update button in the form was clicked
 if (isset($_POST['update']) && isset($_POST['tag'])) {
+    //Get and filter the name of the tag you want to update
     $tag_name = filter_input(INPUT_POST, 'tag', FILTER_SANITIZE_STRING);
 }
 
+//Check if a new tag name is submitted
 if (isset($_POST['change-tag-name']) && isset($_POST['new-name'])) {
+    //Get and filter the name of the tag you want update, then get the tag id
     $tag_current_name = filter_input(INPUT_POST, 'current-name', FILTER_SANITIZE_STRING);
     $tag_id = get_tag_id($tag_current_name)['id'];
+    //Get and filter the new name of the tag
     $tag_new_name = filter_input(INPUT_POST, 'new-name', FILTER_SANITIZE_STRING);
+    //Check if the new tag name already exist in the tags table
     if (in_array($tag_new_name, $tags)) {
         header('location: tags.php?msg=The+new+tag+name+already+exist');
     }
+    //Check if the tag is updated
     if (add_single_tag($tag_new_name, $tag_id)) {
         header('location: tags.php');
         die;
@@ -51,10 +66,12 @@ include('inc/header.php');
 ?>
 
 <div class="tags-control">
+    <!-- Display the form to select a tag and the buttons to update or delete the selected tag -->
     <form action="tags.php" method="post">
         <select name="tag">
         <option>Select a tag</option>
-        <?php foreach ($tags as $tag) {
+        <?php 
+        foreach ($tags as $tag) {
             if (isset($tag_id) && ($tag == $tag_name)) {
                 echo "<option value='$tag' selected>$tag</option>";
             } else {
@@ -69,6 +86,7 @@ include('inc/header.php');
     </form>
 </div>
 
+<!-- Display this form when update button was selected -->
 <?php if (isset($_POST['update'])) { ?>
     <div class="edit-tag">
         <form action="tags.php" method="post">
@@ -81,35 +99,11 @@ include('inc/header.php');
     </div>
 <?php } ?>
 
-<?php if (isset($entries)) { ?>
-
-    <div class="entry-list">
-
-        <!-- Display all the entries -->
-        <?php foreach ($entries as $entry) { 
-            $tags = get_tags_per_entry($entry['id']); 
-        ?>
-            <article>
-                <h2>
-                    <a href="detail.php?id=<?php echo $entry['id']; ?>">
-                        <?php echo $entry['title']; ?>
-                    </a>
-                </h2>
-                <time datetime="<?php echo $entry['date']; ?>">
-                    <?php echo strftime("%B %e, %G", strtotime($entry['date'])); ?>
-                </time>
-                <?php if (!empty($tags)) {
-                    echo "<div class='tags-list'>";
-                    foreach ($tags as $tag) {
-                        echo "<a href='tags.php?id=" . $tag['id'] . "' class='button button-tag'>" . $tag['name'] . "</a>";
-                    }
-                    echo "</div>";
-                } ?>
-            </article>
-        <?php } ?>
-
-    </div>
-<?php } ?>
-
-
+<!-- Display list of entries with the selected tag  -->
+<?php 
+if (isset($entries)) { 
+    include('inc/entriesList.php');
+}
+?>
+    
 <?php include('inc/footer.php'); ?>
