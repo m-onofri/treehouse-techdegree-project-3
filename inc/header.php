@@ -18,7 +18,10 @@
                         <i class="material-icons">library_books</i>
                         <h2> MyLearningJournal</h2>
                     </a>
-                    <a class="button icon-right" href="new.php"><span>New Entry</span> <i class="material-icons">add</i></a>
+                    <div class="header-buttons">
+                        <a class="button icon-right" href="tags.php"><span>Tags</span> <i class="material-icons">add</i></a>
+                        <a class="button icon-right" href="new.php"><span>New Entry</span> <i class="material-icons">add</i></a>
+                    </div>
                 </div>
             </div>
         </header>

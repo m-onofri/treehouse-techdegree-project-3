@@ -8,6 +8,8 @@ body {
 	font-family: 'Cousine', serif;
 	font-weight: 400;
 	background-color: rgb(240, 252, 235);
+	position: relative;
+  	min-height: 100vh;
 }
 header .container {
 	margin: 0 auto;
@@ -35,14 +37,32 @@ header .logo h2 {
 	font-size: 35px;
 }
 header .button {
-	margin: 35px 0 20px;
+	margin: 35px 10px 20px;
+}
+header .header-buttons {
+	position: relative;
+	margin-top: 40px;;
 }
 footer {
 	text-align: center;
 	padding: 35px 0;
 	border-top: 4px solid #678f89;
+	max-height: 100px;
+	position: absolute;
+	  bottom: 0;
+	width: 100%;
 }
 
+/* ==========================================================================
+   Tags
+   ========================================================================== */
+
+   .tags-control {
+	   display: box;
+	   width: 600px;
+	   margin: 50px auto 0;
+   }
+   
 /* ==========================================================================
    Button Styles
    ========================================================================== */
@@ -88,6 +108,11 @@ footer {
 	text-transform: uppercase;
 	background-color: rgb(255, 0, 0);
 	border-color: rgb(255, 0, 0);
+}
+.button-update {
+	text-transform: uppercase;
+	background-color: #ca7c07;
+	border-color: #ca7c07;
 }
 .button-tag {
 	margin-right: 1rem;
@@ -158,7 +183,8 @@ ul li a {
 
 .entry-list,
 .edit-entry,
-.new-entry {
+.new-entry,
+.edit-tag {
 	max-width: 800px;
 	margin: 0 auto;
 	padding: 70px 0 150px 0;
@@ -178,7 +204,7 @@ ul li a {
 	margin-bottom: 8px;
 }
 .entry-list.single {
-	padding-bottom: 70px;
+	padding-bottom: 25px;
 }
 .entry-list.single time {
 	font-size: 18px;
@@ -192,7 +218,7 @@ ul li a {
 	margin-bottom: 40px;
 }
 .edit {
-	padding-bottom: 80px;
+	padding-bottom: 130px;
 	margin: 0 auto;
 	width: 200px;
 	display: flex;
@@ -244,6 +270,10 @@ form textarea:focus {
 }
 input[type=submit] {
 	margin-right: 5px;
+}
+select{
+	padding: 10px;
+	width: 200px;
 }
 
 

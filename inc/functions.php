@@ -75,9 +75,23 @@ function get_tags() {
        $e->getMessage();
     }
 
-    $tags = $results->fetch();
+    $tags = array_map(function($t) { return $t['name'];}, $results->fetchAll(PDO::FETCH_ASSOC));
 
     return $tags;
+}
+
+function get_tag($tag_id) {
+    include('connection.php');
+
+    try {
+        $result = $db->prepare('SELECT name FROM tags WHERE id = ?');
+        $result->bindValue(1, $tag_id, PDO::PARAM_INT);
+        $result->execute();
+        $tag_name = $result->fetch();
+        return $tag_name;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
 }
 
 function get_tag_id($tag) {
@@ -129,12 +143,19 @@ function add_entry($title, $date, $time_spent, $learned, $resources, $tags, $id 
     }
 }
 
-function add_single_tag($tag) {
+function add_single_tag($tag, $id = null) {
     include('connection.php');
 
     try {
-        $result = $db->prepare('INSERT INTO tags (name) VALUES (?)');
+        if (!empty($id)) {
+            $result = $db->prepare('UPDATE tags SET name = ? WHERE id = ?');
+        } else {
+            $result = $db->prepare('INSERT INTO tags (name) VALUES (?)');
+        }
         $result->bindValue(1, $tag, PDO::PARAM_STR);
+        if (!empty($id)) {
+            $result->bindValue(2, $id, PDO::PARAM_INT);
+        }
         if ($result->execute()) {
             $tag_id = $db->lastInsertId();
             return $tag_id;
@@ -142,6 +163,7 @@ function add_single_tag($tag) {
     } catch (Exception $e) {
         $e->getMessage();
     }
+    return false;
 }
 
 function add_tags($tags, $entry_id) {
@@ -218,3 +240,22 @@ function delete_entry($entry_id) {
     return false;
 }
 
+function delete_tag($tag_id) {
+    include('connection.php');
+
+    try {
+        $result = $db->prepare('DELETE FROM tags WHERE id = ?');
+        $result->bindValue(1, $tag_id, PDO::PARAM_INT);
+
+        $result1 = $db->prepare('DELETE FROM entries_tags WHERE tags_id = ?');
+        $result1->bindValue(1, $tag_id, PDO::PARAM_INT);
+
+       if ($result->execute() && $result1->execute()) {
+            return true;
+        }
+    } catch (Exception $e) {
+       $e->getMessage();
+    }
+
+    return false;
+}
