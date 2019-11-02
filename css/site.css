@@ -247,6 +247,20 @@ ul li a {
 	margin-top: 1.5rem;
 }
 
+.error-message {
+	display: block;
+	background-color: tomato;
+	text-align: center;
+	padding: 20px;
+	margin-bottom: 20px;;
+}
+
+.error-message h4{
+	color: white;
+	line-height: 2em;
+	margin: 0;
+}
+
 
 
 /* ==========================================================================

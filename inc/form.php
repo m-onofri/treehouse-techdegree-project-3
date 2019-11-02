@@ -2,7 +2,9 @@
 <?php
 //Display the error message
 if (isset($error_message)) {
-    echo "<h2>$error_message</h2>";
+    echo "<div class='error-message'>";
+    echo "<h4>$error_message</h4>";
+    echo "</div>";
 } 
 ?>
 
@@ -18,7 +20,7 @@ if (isset($error_message)) {
         <!-- Date -->
     <label for="date">Date</label>
     <input 
-        id="date" type="date" name="date" 
+        id="date" type="date" name="date" placeholder="mm/dd/yy"
         value="<?php echo $date; ?>"/><br>
 
     <!-- Time Spent -->

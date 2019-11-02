@@ -59,7 +59,7 @@ include('inc/header.php');
          <!-- Display all the resources for the current entry -->
         <?php 
         if (!empty($entry['resources'])) {
-            $resources = explode(", ", $entry['resources']);
+            $resources = array_map(function($r){return trim($r);}, explode(",", $entry['resources']));
             echo '<div class="entry">';
             echo "<h3>Resources to Remember:</h3>";
             echo "<ul>";
